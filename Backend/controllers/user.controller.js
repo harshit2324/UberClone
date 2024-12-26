@@ -1,8 +1,8 @@
 const userModel = require('../models/user.model');
+const router = require('../routes/user.routes');
+const { route } = require('../routes/user.routes');
 const userService = require('../services/user.service')
 const { validationResult } =require('express-validator')
-
-
 
 
 
@@ -49,5 +49,10 @@ module.exports.loginUser = async (req, res, next) => {
   }
 
   const token = user.genrateAuthToken()
+  res.cookie('token', token)
   res.status(200).json({token, user});
+}
+
+module.exports.getUserProfile = async(req, res, next) => {
+  res.status(200).json(req.user)
 }
