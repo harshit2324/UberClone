@@ -1,6 +1,6 @@
 const { model } = require("mongoose");
-const captain = require("../models/captain.model");
-const captainModel = require("../models/captain.model");
+const captain = require("../models/cptain.model");
+const captainModel = require("../models/cptain.model");
 
 module.exports.createCaptain = async ({
   firstname,
