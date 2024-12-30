@@ -52,7 +52,7 @@ password: {
       required: true,
       min: [1, 'capacity must be at least 1']
     },
-    vihicleType: {
+    vehicaleType: {
       type: String,
       required: true,
       enum:['car', 'motorcyle', 'auto']
@@ -71,16 +71,16 @@ password: {
 } )
 
 
-captainSchema.method.genrateAuthToken = function() {
+captainSchema.methods.generateAuthToken = function() {
   const token = jwt.sign({_id: this._id}, process.env.JWT_SECRET, { expiresIn: '24h'})
   return token
 }
 
-captainSchema.method.comparepassword = async function(password) {
-  return await bcrypt.compare(this.password, 10)
+captainSchema.methods.comparepassword = async function(password) {
+  return await bcrypt.compare(password, this.password)
 },
 
-captainSchema.method.hashpassword = async function (password) {
+captainSchema.statics.hashpassword = async function (password) {
   return await bcrypt.hash(password, 10)
 }
 
