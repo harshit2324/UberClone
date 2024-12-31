@@ -25,6 +25,4 @@ app.use('/captain', captainRoutes);
 
 
 
-app.use
-
 module.exports = app; 
