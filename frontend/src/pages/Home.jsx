@@ -3,27 +3,29 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import "remixicon/fonts/remixicon.css";
 import LocationSearchPanel from "../components/LocationSearchPanel";
-import V from '../components/Vehiclepanel'
 import Vehiclepanel from "../components/Vehiclepanel";
 import ConfermedRide from "../components/ConfermedRide";
 import LookingForDriver from "../components/LookingForDriver";
 import WaitForsDriver from "../components/WaitForsDriver";
 
 
-function Home() {
+const  Home =() => {
   const [pickup, setPickup] = useState("");
   const [destination, setDestination] = useState("");
   const [panelOpen, setpanelOpen] = useState(false);
+  const [vehiclepannel, setvehiclepannel] = useState(false)
+  const [confirmRidepanel, setConfirmpanel] = useState(false)
+  const [vehicleFound, setVehicleFound] = useState(false)
+  const [waitingfORDriver, setWaitingForDriver ] = useState(false)
+
+
+
   const panelref = useRef(null);
   const panelcloseref = useRef(null);
-  const [vehiclepannel, setvehiclepannel] = useState(false)
   const vehiclepannelref = useRef(null)
-  const [confirmRidepanel, setConfirmpanel] = useState(false)
   const confirmRidepanelref = useRef(null)
-  const [vehicleFound, setVehicleFound] = useState(false)
-  const vehicleFoundRef = useRef(false)
-  const WaitingForDriverref = useRef(null)
-  const [waitingfORDriver, setWaitingForDriver ] = useState(false)
+  const vehicleFoundRef = useRef(null)
+  const waitingFordriverref = useRef(null)
 
   
   const submitHandler = () => {
@@ -78,11 +80,11 @@ function Home() {
 
   useGSAP(function(){
    if(waitingfORDriver){
-    gsap.to(WaitingForDriverref.current, {
+    gsap.to(waitingFordriverref.current, {
       transform: 'translateY(0)'
     })
    }else{
-    gsap.to(WaitingForDriverref.current, {
+    gsap.to(waitingFordriverref.current, {
       transform: 'translatey(100%)'
     })
    }
@@ -115,9 +117,9 @@ function Home() {
 
           <h4 className="text-2xl font-semibold relative">Find a trip</h4>
           <form
-            onSubmit={(e) => {
-              e.preventDefault();
-            }}
+          onSubmit={() => {
+            submitHandler(e)
+          }}
           >
             <div className="line absolute h-16 w-1 top-[35%] left-10 bg-gray-900 rounded-full"></div>
             <input
@@ -159,7 +161,7 @@ function Home() {
       <div ref={vehicleFoundRef} className="fixed w-full z-10 translate-y-full bg-white bottom-0 px-3 py-6 pt-12">
      <LookingForDriver setVehicleFound={setVehicleFound} />
       </div>
-      <div  ref={waitingfORDriver} className="fixed w-full z-10 translate-y-full bg-white bottom-0 px-3 py-6 pt-12">
+      <div  ref={waitingFordriverref} className="fixed w-full z-10 translate-y-full bg-white bottom-0 px-3 py-6 pt-12">
      <WaitForsDriver waitingfORDriver={waitingfORDriver } />
       </div>
     </div>
