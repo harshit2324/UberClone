@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React from 'react'
 
 function RidePopup(props) {
  
@@ -41,10 +41,8 @@ function RidePopup(props) {
       </div>
       </div>
       <button onClick={()=>{
-       props.setVehicleFound(true)
-       props.setConfirmpanel(false)
-       
-      }} className='w-full mt-5 bg-green-600 text-white font-semibold p-2 rounded-lg'>confirm</button>
+    props.setConfirmridePopuppanel(true)
+      }} className='w-full mt-5 bg-green-600 text-white font-semibold p-2 rounded-lg'>accept</button>
       <button onClick={()=>{
    props.setridePopuppanel(false)
        
