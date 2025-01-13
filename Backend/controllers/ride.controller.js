@@ -15,3 +15,7 @@ try {
   return res.status(500).json({ massage: err.message})
 }
 };
+
+module.exports.getFare = async(req, res) => {
+     
+}

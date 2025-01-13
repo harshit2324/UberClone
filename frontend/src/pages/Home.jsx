@@ -13,7 +13,7 @@ const Home = () => {
   const [destination, setDestination] = useState("");
   const [panelOpen, setpanelOpen] = useState(false);
   const [vehiclepannel, setvehiclepannel] = useState(false);
-  const [confirmRidepanel, setConfirmpanel] = useState(false);
+  const [confirmRidepanel, setConfirmRidepanel] = useState(false);
   const [vehicleFound, setVehicleFound] = useState(false);
   const [waitingfORDriver, setWaitingForDriver] = useState(false);
   const [ pickupSuggestions, setPickupSuggestions ] = useState([])
@@ -135,6 +135,12 @@ const handleDestinationChange = async (e) => {
     [waitingfORDriver]
   );
 
+
+  function findTrip(){
+    setvehiclepannel(true)
+    setpanelOpen(false)
+  }
+
   return (
     <div className="h-screen reletive overflow-hidden">
       <img
@@ -173,9 +179,7 @@ const handleDestinationChange = async (e) => {
                 setActiveField('pickup')
               }}
               value={pickup}
-              onChange={(e) => {
-             handlePickupChange
-              }}
+              onChange={handlePickupChange}
               className="bg-[#eee] px-10 py-2 text-base rounded-lg w-full mb-2"
               type="text"
               placeholder="add a pick-up location"
@@ -193,7 +197,8 @@ const handleDestinationChange = async (e) => {
             />
           </form>
           <button
-                        onClick={findTrip}
+          onClick={findTrip}
+                      
                         className='bg-black text-white px-4 py-2 rounded-lg mt-3 w-full'>
                         Find Trip
                     </button>
@@ -201,8 +206,8 @@ const handleDestinationChange = async (e) => {
         <div ref={panelref} className="bg-white h-0 opacity-0 ">
         <LocationSearchPanel
                         suggestions={activeField === 'pickup' ? pickupSuggestions : destinationSuggestions}
-                        setPanelOpen={setpanelOpen}
-                        setVehiclePanel={setvehiclepannel}
+                        setpanelOpen={setpanelOpen}
+                        setvehiclepannel={setvehiclepannel}
                         setPickup={setPickup}
                         setDestination={setDestination}
                         activeField={activeField}
@@ -214,9 +219,9 @@ const handleDestinationChange = async (e) => {
         className="fixed w-full z-10 translate-y-full bg-white bottom-0 px-3 py-10 pt-12"
       >
         <Vehiclepanel
-          setConfirmpanel={setConfirmpanel}
+          setConfirmRidepanel={setConfirmRidepanel}
           setvehiclepannel={setvehiclepannel}
-          setConfirmRidePanel={setConfirmRidePanel}
+          setConfirmRidePanel={setConfirmRidepanel}
         />
       </div>
       <div
@@ -224,13 +229,11 @@ const handleDestinationChange = async (e) => {
         className="fixed w-full z-10 translate-y-full bg-white bottom-0 px-3 py-6 pt-12"
       >
         <ConfermedRide
-        createRide={createRide}
+      
         pickup={pickup}
         destination={destination}
-        fare={fare}
-        vehicleType={vehicleType}
 
-        setConfirmRidePanel={setConfirmpanel} setVehicleFound={setVehicleFound}
+        setConfirmRidePanel={setConfirmRidepanel} setVehicleFound={setVehicleFound}
         />
       </div>
       <div
@@ -238,11 +241,9 @@ const handleDestinationChange = async (e) => {
         className="fixed w-full z-10 translate-y-full bg-white bottom-0 px-3 py-6 pt-12"
       >
         <LookingForDriver
-          createRide={createRide}
+
           pickup={pickup}
           destination={destination}
-          fare={fare}
-          vehicleType={vehicleType}
           setVehicleFound={setVehicleFound}/>
       </div>
       <div
@@ -250,7 +251,7 @@ const handleDestinationChange = async (e) => {
         className="fixed w-full z-10 translate-y-full bg-white bottom-0 px-3 py-6 pt-12"
       >
         <WaitForsDriver
-           ride={ride}
+
            setVehicleFound={setVehicleFound}
            setWaitingForDriver={setWaitingForDriver}
         waitingfORDriver={waitingfORDriver} />
