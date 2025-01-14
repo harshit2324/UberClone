@@ -23,7 +23,7 @@ router.post(
   rideController.createRide
 );
 
-router.get('get-fare', 
+router.get('/get-fare', 
   authMiddleware.athUser,
   query('pickup').isString().isLength({ min: 3 }).withMessage('Invalid pickup address'),
   query('destination').isString().isLength({ min: 3 }).withMessage('Invalid destination address'),
