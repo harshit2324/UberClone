@@ -60,7 +60,7 @@ password: {
     
    },
    location: {
-    lat: {
+    ltd: {
       type: Number
     },
     lng: {

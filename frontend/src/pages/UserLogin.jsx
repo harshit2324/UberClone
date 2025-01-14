@@ -48,7 +48,7 @@ const UserLogin = () => {
             required
             value={email}
             onChange={(e) => {
-              setEmailemail(e.target.value);
+              setEmail(e.target.value);
             }}
             className="bg-[#eeeeee] mb-7 rounded px-4 py-2 border w-full text-lg placeholder:text-base"
             type="email"
