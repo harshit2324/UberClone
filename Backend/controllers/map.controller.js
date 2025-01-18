@@ -12,7 +12,7 @@ module.exports.getCoordinates = async (req, res, next) => {
     const { address } = req.query;
 
     try {
-        const coordinates = await mapService.getAddressCordinate(address);
+        const coordinates = await mapService.getAddressCoordinate(address);
         res.status(200).json(coordinates);
     } catch (error) {
         res.status(404).json({ message: 'Coordinates not found' });

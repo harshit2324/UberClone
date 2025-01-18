@@ -1,5 +1,5 @@
 import React, { useRef, useState, useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { data, Link } from "react-router-dom";
 import Captaindetails from "../components/Captaindetails";
 import RidePopup from "../components/RidePopup";
 import gsap from "gsap";
@@ -9,9 +9,9 @@ import { SocketContext } from "../context/SocketContext";
 import { CaptainDataContext } from "../context/CaptainContext";
 
 function CaptainHome() {
-  const [RidePopuppanel, setridePopuppanel] = useState(true)
+  const [RidePopuppanel, setridePopuppanel] = useState(false)
    const [ConfirmridePopuppanel, setConfirmridePopuppanel] = useState(false)
-
+  const [ride, setride] = useState(null)
 
   const Ridepopuppanelref = useRef(null)
   const ConfirmridePopuppanelref = useRef(null)
@@ -45,6 +45,12 @@ function CaptainHome() {
 
     // return () => clearInterval(locationInterval)
 }, [])
+
+socket.on('new-ride', (data) => {
+  console.log(data)
+  setride(data)
+  setridePopuppanel(true)
+})
 
   useGSAP(function(){
     if(RidePopuppanel){
@@ -99,7 +105,7 @@ function CaptainHome() {
   <Captaindetails />
       </div>
       <div ref={Ridepopuppanelref} className="fixed w-full z-10  bg-white bottom-0 px-3 py-6 pt-12">
-    <RidePopup setridePopuppanel={setridePopuppanel} setConfirmridePopuppanel={setConfirmridePopuppanel}  />
+    <RidePopup   ride={ride}  setridePopuppanel={setridePopuppanel} setConfirmridePopuppanel={setConfirmridePopuppanel}  />
       </div>
       <div ref={ConfirmridePopuppanelref} className="fixed w-full z-10  bg-white bottom-0 px-3 py-6 h-screen pt-12">
     <ConfirmRidePopup setConfirmridePopuppanel={setConfirmridePopuppanel} setridePopuppanel={setridePopuppanel} />

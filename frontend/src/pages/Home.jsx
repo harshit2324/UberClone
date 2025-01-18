@@ -274,6 +274,7 @@ const Home = () => {
         className="fixed w-full z-10 translate-y-full bg-white bottom-0 px-3 py-6 pt-12"
       >
         <ConfermedRide
+     
         createRide={createRide}
           pickup={pickup}
           fare={fare}

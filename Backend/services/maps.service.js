@@ -1,28 +1,27 @@
 const axios = require('axios');
+const captainModel = require('../models/cptain.model');
+const sendMessageToSocketId = 
+module.exports.getAddressCoordinate = async (address) => {
+  const apiKey = process.env.GOOGLE_MAPS_API;
+  const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`;
 
-module.exports.getAddressCordinate = async () => {
-  const getAddressCordinate = async (address) => {
-    const apiKey = process.env.GOOGLE_MAPS_API 
-    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`;
-
-    try {
+  try {
       const response = await axios.get(url);
-      const { results } = response.data;
-
-      if (results.length > 0) {
-        const { lat, lng } = results[0].geometry.location;
-        return { lat, lng };
+      if (response.data.status === 'OK') {
+          const location = response.data.results[ 0 ].geometry.location;
+          return {
+            ltd: location.lat,
+            lng: location.lng
+          };
       } else {
-        throw new Error('No results found');
+          throw new Error('Unable to fetch coordinates');
       }
-    } catch (error) {
-      console.error('Error fetching coordinates:', error);
+  } catch (error) {
+      console.error(error);
       throw error;
-    }
-  };
-
-  module.exports.getAddressCordinate = getAddressCordinate;
+  }
 }
+
 
 module.exports.getDistanceTime = async (origin, destination) => {
   if (!origin || !destination) {
@@ -87,6 +86,7 @@ module.exports.getCaptainsInTheRadius = async (ltd, lng, radius) => {
           }
       }
   });
+
 
   return captains;
 
