@@ -10,6 +10,8 @@ import WaitForsDriver from "../components/WaitForsDriver";
 import axios from "axios";
 import {SocketContext} from '../context/SocketContext'
 import {UserDataContext} from '../context/UserContext'
+import { Socket } from "socket.io-client";
+import { response } from "express";
 
 
 const Home = () => {
@@ -37,7 +39,7 @@ const Home = () => {
   const { user } = useContext(UserDataContext)
 
   useEffect(() => {
-      socket.emit("join", { userType: "user", userId: user._id })
+    socket.emit("join", { userType: "user", userId: user._id })
   }, [ user ])
 
 
@@ -165,20 +167,24 @@ const Home = () => {
     setFare(response.data);
   }
 
+
   async function createRide() {
-    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/create`, {
-        pickup,
-        destination,
-        vehicleType
-    }, {
-        headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
-    })
+    try {
+        const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/create`, {
+            pickup,
+            destination,
+            vehicleType
+        }, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        });
 
-  console.log(response.data)
+        console.log(response.data);
+    } catch (error) {
+        console.error('Error creating ride:', error);
+    }
 }
-
 
   return (
     <div className="h-screen reletive overflow-hidden">
